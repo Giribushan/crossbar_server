@@ -1,0 +1,100 @@
+def _PLATFORM = project.properties.get('buildPlatform')
+def _PUBLISH = true
+project.ext {
+    PLATFORM = _PLATFORM
+    PLUGIN_ANDROID_APP = 'com.android.application'
+    PLUGIN_JAVA_APP = 'application'
+    IS_ANDROID = _PLATFORM == 'android'
+    IS_NETTY = _PLATFORM == 'netty'
+    IS_NEXT = _PLATFORM == 'next'
+    BUILD_LEGACY = project.properties.get('buildLegacy', false)
+    PUBLISH = _PUBLISH
+}
+
+apply plugin: project.IS_ANDROID ? project.PLUGIN_ANDROID_APP: project.PLUGIN_JAVA_APP
+
+if (plugins.hasPlugin(project.PLUGIN_ANDROID_APP)) {
+    android {
+        compileSdkVersion 29
+        buildToolsVersion '29.0.3'
+
+        defaultConfig {
+            minSdkVersion 24
+            targetSdkVersion 29
+            multiDexEnabled true
+        }
+        buildTypes {
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            }
+        }
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+        sourceSets {
+            main {
+                java {
+                    // include 'io/crossbar/autobahn/demogallery/android/**'
+                    include 'io/crossbar/autobahn/demogallery/ExampleClient.java'
+                    exclude 'io/crossbar/autobahn/demogallery/netty/**'
+                }
+            }
+        }
+        packagingOptions {
+            exclude 'META-INF/spring.tooling'
+            exclude 'META-INF/spring.handlers'
+            exclude 'META-INF/spring.schemas'
+            exclude 'META-INF/license.txt'
+            exclude 'META-INF/notice.txt'
+            exclude 'META-INF/INDEX.list'
+        }
+    }
+
+    dependencies {
+        implementation project(path: ':autobahn')
+        // https://mvnrepository.com/artifact/io.crossbar.autobahn/autobahn-java
+        //implementation group: 'io.crossbar.autobahn', name: 'autobahn-java', version: '20.7.1'
+        implementation 'androidx.appcompat:appcompat:1.2.0'
+        implementation 'com.android.support:multidex:1.0.3'
+        implementation "androidx.constraintlayout:constraintlayout:2.0.1"
+        implementation "com.google.android.material:material:1.2.1"
+
+        implementation 'com.basgeekball:awesome-validation:4.2'
+        implementation 'org.web3j:crypto:4.6.0-android'
+    }
+} else if (project.IS_NEXT) {
+    // Nothing useful is produced here, however this avoids
+    // build failure, until we come with a better solution.
+    mainClassName = 'dummy'
+    sourceSets {
+        main {
+            java {
+                exclude 'io/crossbar/autobahn/demogallery'
+            }
+        }
+    }
+} else {
+    mainClassName = 'io.crossbar.autobahn.demogallery.netty.Main'
+    dependencies {
+        //implementation project(path: ':autobahn')
+        implementation group: 'io.crossbar.autobahn', name: 'autobahn-java', version: '20.7.1'
+    }
+    sourceSets {
+        main {
+            java {
+                include 'io/crossbar/autobahn/demogallery/netty/**'
+                include 'io/crossbar/autobahn/demogallery/ExampleClient.java'
+                include 'io/crossbar/autobahn/demogallery/data/**'
+                // exclude 'io/crossbar/autobahn/demogallery/android/**'
+            }
+        }
+    }
+    jar {
+        version = project.properties.get("buildVersion", "")
+    }
+    task wrapper(type: Wrapper) {
+        gradleVersion = '6.4.1' 
+    }
+}
