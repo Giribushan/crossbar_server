@@ -26,22 +26,22 @@ RUN apt -y install wget libasound2 libasound2-data
 #     && rm -rf /var/lib/apt/lists/
 # RUN whereis java
 # RUN java -version
-
-ENV GRADLE_VERSION 6.4.1
-
+#TODO - UNDO
+#ENV GRADLE_VERSION 6.4.1
+#TODO - UNDO
 #COPY ./gradle-6.4.1-bin.zip /tmp
-RUN  wget -o /tmp/gradle-${GRADLE_VERSION}-bin.zip https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip 
-RUN mkdir /opt/gradle 
+#RUN  wget -o /tmp/gradle-${GRADLE_VERSION}-bin.zip https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip 
+#RUN mkdir /opt/gradle 
 
 RUN apt update \
     && apt install -y unzip net-tools procps expect vim\
     && apt clean \
     && rm -rf /var/lib/apt/lists/
-
-RUN unzip -d /opt/gradle /tmp/gradle-${GRADLE_VERSION}-bin.zip \
-    && rm /tmp/gradle-${GRADLE_VERSION}-bin.zip
-
-ENV PATH=$PATH:/opt/gradle/gradle-${GRADLE_VERSION}/bin
+#TODO - UNDO
+#RUN unzip -d /opt/gradle /tmp/gradle-${GRADLE_VERSION}-bin.zip \
+#    && rm /tmp/gradle-${GRADLE_VERSION}-bin.zip
+#TODO - UNDO
+#ENV PATH=$PATH:/opt/gradle/gradle-${GRADLE_VERSION}/bin
 
 WORKDIR /workspace
 
@@ -50,8 +50,9 @@ COPY . /workspace
 RUN ls -a /workspace
 
 RUN cd /workspace/demo-gallery
+#TODO - UNDO
 # Build the workspace
-RUN gradle installDist -PbuildPlatform=netty -PbuildVersion=20.7.1
+#RUN gradle installDist -PbuildPlatform=netty -PbuildVersion=20.7.1
 
 RUN ls -a /workspace
 
