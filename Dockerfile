@@ -30,7 +30,7 @@ RUN apt -y install wget libasound2 libasound2-data
 ENV GRADLE_VERSION 6.4.1
 
 #COPY ./gradle-6.4.1-bin.zip /tmp
-RUN  -o /tmp/gradle-${GRADLE_VERSION}-bin.zip wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip 
+RUN  wget -o /tmp/gradle-${GRADLE_VERSION}-bin.zip https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip 
 RUN mkdir /opt/gradle 
 
 RUN apt update \
