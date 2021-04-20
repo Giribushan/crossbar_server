@@ -11,13 +11,13 @@ RUN apt update
 RUN apt -y install wget libasound2 libasound2-data
 
 # JDK - working
-COPY ./jdk-11.0.10_linux-x64_bin.deb /usr/lib/jvm/jdk-11.0.10_linux-x64_bin.deb
-RUN dpkg -i /usr/lib/jvm/jdk-11.0.10_linux-x64_bin.deb
-ENV JAVA_HOME /usr/lib/jvm/jdk-11.0.10/
-RUN export JAVA_HOME
-ENV PATH $JAVA_HOME/bin:$PATH
-RUN whereis java
-RUN java -version
+# COPY ./jdk-11.0.10_linux-x64_bin.deb /usr/lib/jvm/jdk-11.0.10_linux-x64_bin.deb
+# RUN dpkg -i /usr/lib/jvm/jdk-11.0.10_linux-x64_bin.deb
+# ENV JAVA_HOME /usr/lib/jvm/jdk-11.0.10/
+# RUN export JAVA_HOME
+# ENV PATH $JAVA_HOME/bin:$PATH
+# RUN whereis java
+# RUN java -version
 
 # install JDK headless
 # RUN    apt update \
@@ -29,8 +29,8 @@ RUN java -version
 
 ENV GRADLE_VERSION 6.4.1
 
-COPY ./gradle-6.4.1-bin.zip /tmp
-#RUN    wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
+#COPY ./gradle-6.4.1-bin.zip /tmp
+RUN    wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
 RUN mkdir /opt/gradle 
 
 RUN apt update \
