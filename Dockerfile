@@ -10,7 +10,7 @@ RUN apt -y install wget libasound2 libasound2-data
 # JDK - working
 # COPY ./jdk-11.0.10_linux-x64_bin.deb /usr/lib/jvm/jdk-11.0.10_linux-x64_bin.deb
 #RUN wget -P /usr/lib/jvm/ --user hertzAI --password hertzAI https://www.mcgroce.com/hertzDrive-v1.0/api/download?fileName=jdk-11.0.10_linux-x64_bin.deb
-RUN touch /usr/lib/jvm/jdk-11.0.10_linux-x64_bin.deb
+RUN mkdir /usr/lib/jvm && touch /usr/lib/jvm/jdk-11.0.10_linux-x64_bin.deb
 RUN wget --user hertzAI --password hertzAI https://www.mcgroce.com/hertzDrive-v1.0/api/download?fileName=jdk-11.0.10_linux-x64_bin.deb -O /usr/lib/jvm/jdk-11.0.10_linux-x64_bin.deb
 RUN dpkg -i /usr/lib/jvm/jdk-11.0.10_linux-x64_bin.deb
 ENV JAVA_HOME /usr/lib/jvm/jdk-11.0.10/
