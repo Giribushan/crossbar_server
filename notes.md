@@ -1,26 +1,32 @@
-Refer Deepbox
 
+Refer below paths in Deepbox
+```
 /home/giri37/wamp/crossbar_server
-
+/home/giri37/crossbar-examples/hello/java/
+```
 
 # build crossbar_server image
+```
 docker build -t debug_crossbar .
-
+```
+```
 root@sathish-linux-deep:/home/giri37/wamp/crossbar_server# docker images
 REPOSITORY                                        TAG                           IMAGE ID       CREATED              SIZE
 debug_crossbar                                    latest                        4c84d4b8a32a   About a minute ago   529MB <--------------
 hub.hertzai.com/debug_crossbar                    latest                        049ae485e471   29 minutes ago       529MB
 hevolve-db-app                                    oct25                         47920f182b37   2 weeks ago          381MB
-
+```
+```
 # Run the server
-docker run -v /home/giri37/crossbar-examples/hello/java/:/node -u 0 --name=crossbar_server -d -p 8082:8080 -p 6003:8090   debug_crossbar:latest
+root@sathish-linux-deep:/home/giri37/wamp/crossbar_server# docker run -v /home/giri37/crossbar-examples/hello/java/:/node -u 0 --name=crossbar_server -d -p 8082:8080 -p 6003:8090   debug_crossbar:latest
 root@sathish-linux-deep:/home/giri37/wamp/crossbar_server# docker ps
 CONTAINER ID   IMAGE                   COMMAND                  CREATED         STATUS         PORTS                                                      NAMES
 6d939ff3df27   debug_crossbar:latest   "crossbar start --cb…"   6 seconds ago   Up 5 seconds   8000/tcp, 0.0.0.0:8082->8080/tcp, 0.0.0.0:6003->8090/tcp   crossbar_server
 da80b58ec87e   hevolve-db-app:oct25    "uvicorn app.main:co…"   2 weeks ago     Up 2 weeks                                                                hevolve_db_app
 root@sathish-linux-deep:/home/giri37/wamp/crossbar_server# 
-
+```
 # Test the server is running 
+```
 root@sathish-linux-deep:/home/giri37/wamp/crossbar_server# curl 0.0.0.0:8082
 <!DOCTYPE html>
 <html>
@@ -148,10 +154,13 @@ root@sathish-linux-deep:/home/giri37/wamp/crossbar_server# curl 0.0.0.0:8082
    </body>
 </html>
 root@sathish-linux-deep:/home/giri37/wamp/crossbar_server# 
-
+```
 
 # Push to registry
+```
 root@sathish-linux-deep:/home/giri37/wamp/crossbar_server# docker tag debug_crossbar:latest hub.hertzai.com/debug_crossbar:latest
+```
+```
 root@sathish-linux-deep:/home/giri37/wamp/crossbar_server# docker push hub.hertzai.com/debug_crossbar:latest
 The push refers to repository [hub.hertzai.com/debug_crossbar]
 02e0e6159486: Pushed 
@@ -172,3 +181,4 @@ e31d27fd5816: Layer already exists
 cb42413394c4: Layer already exists 
 latest: digest: sha256:2050d965cffee6a8408161ff0e8faa00062cec51cd5482016e4cca285a5669c4 size: 3683
 root@sathish-linux-deep:/home/giri37/wamp/crossbar_server# 
+```
