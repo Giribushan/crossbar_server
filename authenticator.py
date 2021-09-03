@@ -115,8 +115,8 @@ class AuthenticatorSession(ApplicationSession):
 """
 def main():
    
-   #SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://stbitdbuser:9cAxIccp+p*vPJsA@host.docker.internal:3306/hzdb2"
-   SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://stbitdbuser:9cAxIccp+p*vPJsA@localhost:3306/hzdb2"
+   #SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://<>:<>@host.docker.internal:3306/hzdb2"
+   SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://<>:<>@localhost:3306/hzdb2"
    engine = create_engine(
       SQLALCHEMY_DATABASE_URL, echo=True#, connect_args={"check_same_thread": False}
    )
